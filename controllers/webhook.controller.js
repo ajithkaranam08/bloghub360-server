@@ -1,6 +1,5 @@
 import User from "../models/user.model.js";
 import Post from "../models/post.model.js";
-import Comment from "../models/comment.model.js";
 import { Webhook } from "svix";
 import userModel from "../models/user.model.js";
 
@@ -30,7 +29,6 @@ try{
     });
     console.log("deletedUser",deletedUser)
     await Post.deleteMany({user:deletedUser._id})
-    await Comment.deleteMany({user:deletedUser._id})
   }
   return true
 }catch(error){

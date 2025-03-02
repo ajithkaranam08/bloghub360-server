@@ -36,10 +36,44 @@ export const savePost = async (req, res) => {
   res.status(200).json(isSaved ? "Post unsaved" : "Post saved");
 };
 
-export async function createUser(req,res){
-try{
-let body = req.body
-}catch(error){
-
+export async function createUser(req, res) {
+  try {
+    const { username, email, password, profile, userRole } = req.body
+    let createdUser = await User.create({
+      username: username,
+      email: email,
+      password: password,
+      profile: profile,
+      userRole: userRole
+    })
+    return res.json({
+      success: true,
+      payload: createdUser,
+    });
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
 }
+export async function loginUser(req, res) {
+  try {
+    const { username, email, password } = req.body
+   let userDetail = await User.findOne({
+    email:email
+   })
+   if(!userDetail){
+    throw "user not found"
+   }
+
+   if(userDetail?.password !== password){
+    throw "passowrd was wrong"
+   }
+    return res.json({
+      success: true,
+      payload: userDetail,
+    });
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
 }

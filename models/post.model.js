@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 
 const postSchema = new Schema(
   {
-    user: {
+    author: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    img: {
+    bannerImageUrl: {
       type: String,
     },
     title: {
@@ -20,25 +20,33 @@ const postSchema = new Schema(
       required: true,
       unique: true,
     },
-    desc: {
-      type: String,
-    },
     category: {
-      type: String,
-      default: "general",
+      type: Schema.Types.ObjectId,
+      ref: "Categories",
+      required: true,
     },
     content: {
       type: String,
       required: true,
     },
-    isFeatured: {
-      type: Boolean,
-      default: false,
+    description: {
+      type: String,
+      required: true,
     },
-    visit: {
-      type: Number,
-      default: 0,
+    seo: {
+      type: Object
     },
+    isTrending: {
+      type: Boolean
+    },
+    slot: {
+      type: Schema.Types.ObjectId,
+      ref: "PostSlot",
+      required: true,
+    },
+    tags: [{
+      type: String
+    }]
   },
   { timestamps: true }
 );
